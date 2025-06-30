@@ -97,7 +97,14 @@ function App() {
       });
       return;
     }
-    const randomIndex = Math.floor(Math.random() * fortunes.length);
+    // 入力された言葉から一意の数値を生成（ハッシュ化）
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) {
+      const char = text.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash |= 0; // 32bit整数に変換
+    }
+    const randomIndex = Math.abs(hash) % fortunes.length;
     setResult(fortunes[randomIndex]);
   };
 
